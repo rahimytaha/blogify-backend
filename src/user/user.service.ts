@@ -1,4 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from 'src/entities/user.entity';
+import { ILike, Repository } from 'typeorm';
+import { UserListQueryDto } from './dto/userListQuery.dto';
+import { CreateUserDto } from './dto/createUser.dto';
 
 @Injectable()
-export class UserService {}
+export class UserService {
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly UserEntity: Repository<UserEntity>,
+  ) {}
+  async list({ limit, page, query }: UserListQueryDto): Promise<UserEntity[]> {
+    const users = await this.UserEntity.find({
+      where: [{ email: ILike(`%${query}%`) }, { name: ILike(`%${query}%`) }],
+      skip: (page - 1) * limit,
+      take: page * limit,
+    });
+    return users;
+  }
+  async findOne(id: number): Promise<UserEntity> {
+    const user = await this.UserEntity.findOneBy({ id });
+    if (!user) throw new NotFoundException('user not found');
+    return user;
+  }
+  async create(data: CreateUserDto): Promise<UserEntity> {
+    const newUser = this.UserEntity.create(data);
+    await newUser.save();
+    return newUser;
+  }
+  async update(data: CreateUserDto, id: number): Promise<UserEntity> {
+    const user = await this.findOne(id);
+    Object.assign(user, data);
+    await user.save();
+    return user;
+  }
+}
