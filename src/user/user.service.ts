@@ -4,6 +4,7 @@ import { UserEntity } from 'src/entities/user.entity';
 import { ILike, Repository } from 'typeorm';
 import { UserListQueryDto } from './dto/userListQuery.dto';
 import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
@@ -29,9 +30,15 @@ export class UserService {
     await newUser.save();
     return newUser;
   }
-  async update(data: CreateUserDto, id: number): Promise<UserEntity> {
+  async update(data: UpdateUserDto, id: number): Promise<UserEntity> {
     const user = await this.findOne(id);
     Object.assign(user, data);
+    await user.save();
+    return user;
+  }
+    async addAdmin( id: number,state:boolean): Promise<UserEntity> {
+    const user = await this.findOne(id);
+    user["isAdmin"]=state
     await user.save();
     return user;
   }
