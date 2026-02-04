@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { DataSource } from 'typeorm';
+import { UserEntity } from './entities/user.entity';
+import { UserModule } from './user/user.module';
 
 
 @Module({
-  imports: [],
+  imports: [UserModule],
   controllers: [],
   providers: [
     {
@@ -17,8 +19,9 @@ import { DataSource } from 'typeorm';
           username: 'root',
           password: 'Tt9119573449',
           database: 'blogify',
-          entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-          synchronize: true,
+          entities: [UserEntity],
+          synchronize: false,
+          // autoLoadEntities: true,
 
         });
 
