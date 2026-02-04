@@ -5,7 +5,7 @@ import { DataSource } from 'typeorm';
 
 @Module({
   imports: [],
-  controllers: [AppController],
+  controllers: [],
   providers: [
     {
       provide: 'DATA_SOURCE',
@@ -19,6 +19,7 @@ import { DataSource } from 'typeorm';
           database: 'blogify',
           entities: [__dirname + '/../**/*.entity{.ts,.js}'],
           synchronize: true,
+
         });
 
         return dataSource.initialize();
