@@ -5,10 +5,12 @@ import { UserEntity } from './entities/user.entity';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
