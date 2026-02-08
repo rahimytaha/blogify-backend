@@ -11,6 +11,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Login successful' })
   @ApiResponse({ status: 401, description: 'Wrong email or password' })
   async login(@Request() req) {
+    console.log("first")
     return req.user;
   }
 }

@@ -20,8 +20,8 @@ export class UserService {
     });
     return users;
   }
-  async findOne(id: number): Promise<UserEntity> {
-    const user = await this.UserEntity.findOneBy({ id });
+  async findOne(id?: number, email?: string): Promise<UserEntity> {
+    const user = await this.UserEntity.findOne({ where: [{ id }, { email }] });
     if (!user) throw new NotFoundException('user not found');
     return user;
   }
@@ -36,9 +36,9 @@ export class UserService {
     await user.save();
     return user;
   }
-    async addAdmin( id: number,state:boolean): Promise<UserEntity> {
+  async addAdmin(id: number, state: boolean): Promise<UserEntity> {
     const user = await this.findOne(id);
-    user["isAdmin"]=state
+    user['isAdmin'] = state;
     await user.save();
     return user;
   }
