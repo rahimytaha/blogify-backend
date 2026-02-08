@@ -9,7 +9,7 @@ import {
   BaseEntity,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
-enum EBlogStatus {
+export enum EBlogStatus {
   draft = 'DRAFT',
   published = 'PUBLISHED',
   private = 'PRIVATE',
@@ -40,7 +40,7 @@ export class BlogEntity extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   publishedAt?: Date;
 
-  
+
   @CreateDateColumn()
   createdAt: Date;
 
