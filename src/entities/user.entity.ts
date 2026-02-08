@@ -4,9 +4,11 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { BlogEntity } from './blog.entity';
 
 @Entity('userEntity')
 export class UserEntity extends BaseEntity {
@@ -20,6 +22,8 @@ export class UserEntity extends BaseEntity {
   email: string;
   @Column({ default: false, type: 'boolean' })
   isAdmin: boolean;
+  @OneToMany(()=>BlogEntity,(e)=>e.author)
+  blogs:BlogEntity[]
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {

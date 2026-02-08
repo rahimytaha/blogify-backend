@@ -6,10 +6,13 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { BlogEntity } from './entities/blog.entity';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
   imports: [
     UserModule,
+    BlogModule,
     AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -24,7 +27,7 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [UserEntity],
+        entities: [UserEntity,BlogEntity],
         synchronize: false,
         // logging: configService.get<string>('NODE_ENV') !== 'production',
         logging: true,
