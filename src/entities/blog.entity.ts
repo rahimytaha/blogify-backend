@@ -50,6 +50,9 @@ export class BlogEntity extends BaseEntity {
   @Column({ default: 0 })
   viewsCount: number;
 
+    @Column({ default: 0 })
+  readingTime: number;
+
   @Column({ default: false })
   isFeatured: boolean;
 

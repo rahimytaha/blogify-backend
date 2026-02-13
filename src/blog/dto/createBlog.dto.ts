@@ -1,7 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
+  IsIn,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   MaxLength,
@@ -39,6 +41,14 @@ export class CreateBlogDto {
   @IsString()
   @IsNotEmpty()
   content: string;
+
+  @ApiProperty({
+    description: 'reading time of blog',
+    example:0
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  readingTime: number;
 
   @ApiPropertyOptional({
     example: 'Short summary of the post (shown in list)',

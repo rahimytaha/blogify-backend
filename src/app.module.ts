@@ -27,7 +27,7 @@ import { BlogModule } from './blog/blog.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [UserEntity,BlogEntity],
+        entities: [UserEntity, BlogEntity],
         synchronize: false,
         // logging: configService.get<string>('NODE_ENV') !== 'production',
         logging: true,

@@ -1,8 +1,15 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
 import { EBlogStatus } from 'src/entities/blog.entity';
-
 
 export class UpdateBlogDto {
   @ApiPropertyOptional({
@@ -41,6 +48,12 @@ export class UpdateBlogDto {
   @MaxLength(300)
   @Transform(({ value }) => value?.trim())
   excerpt?: string;
+
+  @ApiProperty({
+    example: 'reading time of blog',
+  })
+  @IsNumber()
+  readingTime: number;
 
   @ApiPropertyOptional({
     example: 'PUBLISHED',
