@@ -8,12 +8,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { BlogEntity } from './entities/blog.entity';
 import { BlogModule } from './blog/blog.module';
+import { ScheduleModule } from './schedule/schedule.module';
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
     UserModule,
+    AiModule,
     BlogModule,
     AuthModule,
+    ScheduleModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

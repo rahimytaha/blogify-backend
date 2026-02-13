@@ -9,10 +9,15 @@ export class BlogService {
   constructor(
     @InjectRepository(BlogEntity)
     private readonly blogRepository: Repository<BlogEntity>,
-  ) {}
+  ) {
+  }
   async list(): Promise<BlogEntity[]> {
     const data = await this.blogRepository.find();
     return data;
+  }
+  async listOfTitles(): Promise<string[]> {
+    const data = await this.blogRepository.find({ select: { title: true } });
+    return data.map(e=>e.title)
   }
   async findOne(id: number, setSeen: boolean = true): Promise<BlogEntity> {
     const blog = await this.blogRepository.findOne({ where: { id } });
@@ -29,9 +34,9 @@ export class BlogService {
     await newBlog.save();
     return newBlog;
   }
-  async update(data: CreateBlogDto,id:number): Promise<BlogEntity> {
-    const blog = await this.findOne(id,false);
-    Object.assign(blog,data)
+  async update(data: CreateBlogDto, id: number): Promise<BlogEntity> {
+    const blog = await this.findOne(id, false);
+    Object.assign(blog, data);
     return blog;
   }
 }
